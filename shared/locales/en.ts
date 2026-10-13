@@ -3274,4 +3274,7 @@ export const EN: Readonly<Record<string, string>> = {
   "Carimbo deixado na portaria: {0}": "Stamp left at the front desk: {0}",
   "Entre no prédio ou chegue mais perto da porta para carimbar.": "Go into the building or get closer to the door to stamp.",
   "O carimbo não foi deixado. Tente de novo.": "The stamp wasn't left. Try again.",
+  "Comandos de barra": "Slash commands",
+  "só no terminal": "terminal only",
+  "Abre um painel no terminal da sessão, que o escritório não mostra": "Opens a panel in the session's terminal, which the office does not show",
 };

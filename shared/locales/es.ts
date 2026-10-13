@@ -3275,4 +3275,7 @@ export const ES: Readonly<Record<string, string>> = {
   "Carimbo deixado na portaria: {0}": "Sello dejado en la recepción: {0}",
   "Entre no prédio ou chegue mais perto da porta para carimbar.": "Entra al edificio o acércate más a la puerta para sellar.",
   "O carimbo não foi deixado. Tente de novo.": "El sello no se dejó. Inténtalo de nuevo.",
+  "Comandos de barra": "Comandos de barra",
+  "só no terminal": "solo en la terminal",
+  "Abre um painel no terminal da sessão, que o escritório não mostra": "Abre un panel en la terminal de la sesión, que la oficina no muestra",
 };

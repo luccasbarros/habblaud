@@ -3291,4 +3291,7 @@ export const FR: Readonly<Record<string, string>> = {
   "Carimbo deixado na portaria: {0}": "Tampon laissé à l'accueil : {0}",
   "Entre no prédio ou chegue mais perto da porta para carimbar.": "Entrez dans l'immeuble ou approchez-vous de la porte pour tamponner.",
   "O carimbo não foi deixado. Tente de novo.": "Le tampon n'a pas été laissé. Réessayez.",
+  "Comandos de barra": "Commandes slash",
+  "só no terminal": "terminal uniquement",
+  "Abre um painel no terminal da sessão, que o escritório não mostra": "Ouvre un panneau dans le terminal de la session, que le bureau n'affiche pas",
 };
