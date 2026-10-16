@@ -25,6 +25,10 @@ do meio (0.**3**.0).
   enquanto você digita; as setas andam, `Enter` ou `Tab` completam e `Esc` fecha. Os que abrem um painel vêm marcados
   com "só no terminal". A lista vem da própria sessão, pelo plugin `habblaud-mensagens`: sessões abertas a mandam
   depois de um `/reload-plugins`.
+- **Colar print na caixa de mensagem.** Ctrl+V (⌘V) com uma imagem na área de transferência, na gaveta do agente ou
+  no terminal, grava a imagem no computador, em `~/.habblaud/attachments/` (como os anexos do Novo agente), e põe o
+  caminho no texto: a mensagem chega à sessão só como texto, e o agente lê a imagem pelo caminho. No Docker, quem
+  grava é o `npm run codex:bridge`. Texto colado continua normal.
 
 ### Alterado
 

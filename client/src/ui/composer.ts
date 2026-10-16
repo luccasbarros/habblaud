@@ -35,6 +35,7 @@ import {
 } from './composer-model';
 import type { UiContext } from './context';
 import { DictationButton, dictationAvailable, insertDictation } from './dictation';
+import { pastedImages, uploadPaste } from './paste';
 import { h, setAttr, setHidden, setText, setTitle } from './dom';
 import { access } from '../net/access';
 import { tr } from '../../../shared/i18n';
@@ -113,6 +114,7 @@ export class MessageComposer {
     this.menu = h('ul', { class: 'ui-msg__menu', role: 'listbox', hidden: true, attrs: { id: `ui-msg-menu-${variant}`, 'aria-label': tr('Comandos de barra') } });
     setAttr(this.box, 'aria-controls', this.menu.id);
     setAttr(this.box, 'aria-autocomplete', 'list');
+    this.box.addEventListener('paste', (e) => this.onPaste(e));
     this.sendBtn = h(
       'button',
       {
@@ -333,9 +335,33 @@ export class MessageComposer {
       });
   }
 
+  /**
+   * Ctrl+V com imagem (print): grava no computador (ui/paste.ts) e põe o caminho no cursor, para o agente ler. Texto
+   * colado segue normal.
+   */
+  private onPaste(e: ClipboardEvent): void {
+    const files = pastedImages(e);
+    if (!files.length || this.mode.kind !== 'ready') return;
+    e.preventDefault();
+    const key = this.agentId;
+    this.sayDictation(files.length > 1 ? tr('Gravando {0} prints no computador…', [files.length]) : tr('Gravando o print no computador…'));
+    void (async () => {
+      try {
+        for (const f of files) this.insertText(key, tr('[print: {0}]', [await uploadPaste(f)]));
+        this.sayDictation(files.length > 1 ? tr('Prints colados: o agente lê as imagens pelos caminhos.') : tr('Print colado: o agente lê a imagem pelo caminho.'));
+      } catch (err) {
+        this.sayDictation(tr('Colar print falhou: {0}', [(err as Error).message]), true);
+      }
+    })();
+  }
+
   /** Texto ditado: no cursor, se a caixa ainda é a de quem ditou; senão, no fim do rascunho daquele agente. */
   private insertDictated(text: string): void {
-    const key = this.dictKey;
+    this.insertText(this.dictKey, text);
+  }
+
+  /** Texto no cursor, se a caixa ainda é a de `key`; senão, no fim do rascunho daquele agente. */
+  private insertText(key: string, text: string): void {
     if (key === this.agentId && !this.box.disabled) {
       const box = this.box;
       const { value, caret } = insertDictation(box.value, box.selectionStart ?? box.value.length, box.selectionEnd ?? box.value.length, text);
